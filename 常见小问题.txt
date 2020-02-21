@@ -1,0 +1,46 @@
+  routes: [                               //配置路由，这里是个数组
+    {                                         //每一个链接都是一个对象
+      path: '/',                           //链接路径
+      name: 'HelloWorld',         //路由名称，
+      component: HelloWorld  //对应的组件模板
+    }
+  ]
+
+路由的按需加载写法：  const Hi2 = () => import('components/hi2')    ---> xxx = () => xxx   es6箭头函数的简写
+
+路由的子级 children 【
+	path : "这里面的链接路径,不需要写 '/'   " 
+	{ path : “xx" }
+】
+在父级页面中 要写入 roouter-view 标签 给子模板提供页面显示位置
+
+路由传参
+1. router 里的name 传参。 {{ $route.name }}
+2. router-line 里的 params传参。 router-link :to="{ name: 'xx', params: {} }" 
+3.router-link 里的 query 传参。  router-link :to="{ name: 'xx', query{} }" 
+4.路由传参。 例如：path: '/xx/:id'
+
+路由重定向redirect
+只要在路由配置文件中（/src/router/index.js）把原来的component换成redirect参数就可以了。
+redirect: 'xxx' , --> 这里要注意的是 content 所对应的 是 path 的值
+路由的别名使用 alias
+只要在路由配置文件中（/src/router/index.js）在路由对象里添加一个 alias参数就可以了。
+alias: 'xxx' ---> 这里的 content 是path 值
+redirect and alias distinction
+redirect 不会把 url 改变 依旧使用的是path 而 alias 会把 url 改变参数会变成 你写的别名
+
+url输入不存在的路径
+可以在 router 文件 加一个 路由对象：
+{
+	path: '*',
+	component: xxx
+}
+这样不存在的页面就都会进来这里
+
+路由的钩子函数
+beforeRouteEnter（to, from, next） 进入
+to，from 都是该页面的对象信息， next则像开关是否允许你进行下一步
+beforeRouteLeave 离开
+beforeRouteUpdate
+
+
